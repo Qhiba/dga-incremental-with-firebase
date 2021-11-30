@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "175799062572",
+    "project_id": "dga---incremental-game",
+    "storage_bucket": "dga---incremental-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175799062572:android:56d846c71765324a260189",
+        "android_client_info": {
+          "package_name": "com.qhiba.incrementalgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175799062572-8v5d7q4a3rju67fa70msijhonib0toma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIEfuVpI_XAYH8J3zYc3fM_jw3XnkhNqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175799062572-8v5d7q4a3rju67fa70msijhonib0toma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

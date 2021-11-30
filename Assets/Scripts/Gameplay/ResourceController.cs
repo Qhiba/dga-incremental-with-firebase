@@ -34,7 +34,7 @@ public class ResourceController : MonoBehaviour
         {
             //Menyimpan value yang di set ke _level pada Progress Data
             UserDataManager.progress.ResourceLevels[_index] = value;
-            UserDataManager.Save();
+            UserDataManager.Save(true);
         }
     }
 
@@ -94,6 +94,7 @@ public class ResourceController : MonoBehaviour
 
         resourceUpgradeCost.text = $"Upgrade Cost\n{GetUpgradeCost()}";
         resourceDescription.text = $"{_config.name} Lv. {_level}\n+{GetOutput().ToString("0")}";
+        AnalyticsManager.LogUpgradeEvent(_index, _level);
     }
 
     public void UnlockResource()
@@ -107,6 +108,7 @@ public class ResourceController : MonoBehaviour
         SetUnlocked(true);
         GameManager.Instance.ShowNextResource();
         AchievementController.Instance.UnlockAchievement(AchievementType.UnlockResource, _config.name);
+        AnalyticsManager.LogUnlockEvent(_index);
     }
 
     public void SetUnlocked(bool unlocked)
@@ -118,7 +120,7 @@ public class ResourceController : MonoBehaviour
             if (!UserDataManager.HasResources(_index))
             {
                 UserDataManager.progress.ResourceLevels.Add(_level);
-                UserDataManager.Save();
+                UserDataManager.Save(true);
             }
         }
 

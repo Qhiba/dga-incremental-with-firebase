@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     //Fungsi [Range(min, max)] ialah menjaga value agar tetap berada diantara min dan max-nya
     [Range(0f, 1f)]
     public float autoCollectPercentage = 0.1f;
+    public float saveDelay = 5f;
     public ResourceConfig[] resourceConfigs;
     public Sprite[] resourcesSprites;
 
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     private List<ResourceController> _activeResources = new List<ResourceController>();
     private List<TapText> _tapTextPool = new List<TapText>();
     private float _collectSecond;
+    private float _saveDelayCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +51,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float deltaTime = Time.unscaledDeltaTime;
+        _saveDelayCounter -= deltaTime;
+
         //Fungsi untuk selalu mengeksekusi CollectPerSecond setiap detik
-        _collectSecond += Time.unscaledDeltaTime;
+        _collectSecond += deltaTime;
         if (_collectSecond >= 1f)
         {
             CollectPerSecond();
@@ -138,7 +144,12 @@ public class GameManager : MonoBehaviour
         UserDataManager.progress.gold += value;
         goldInfo.text = $"Gold: {UserDataManager.progress.gold.ToString("0")}";
 
-        UserDataManager.Save();
+        UserDataManager.Save(_saveDelayCounter < 0f);
+
+        if (_saveDelayCounter < 0f)
+        {
+            _saveDelayCounter = saveDelay;
+        }
     }
 
     public void CollectByTap(Vector3 tapPosition, Transform parent)
@@ -175,9 +186,9 @@ public class GameManager : MonoBehaviour
         return tapText;
     }
 
-    public void ClearGameData()
+    public void BackToLoadSelection()
     {
-        UserDataManager.ClearData();
+        SceneManager.LoadScene(0);
     }
 }
 
